@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_internals/demo_buttons.dart';
 
-class UIUpdatesDemo extends StatefulWidget {
+class UIUpdatesDemo extends StatelessWidget {
   const UIUpdatesDemo({Key? key}) : super(key: key);
 
-  @override
-  StatefulElement createElement() {
-    print('UIUpdatesDemo CREATEELEMENT called');
-    return super.createElement();
-  }
+  // NOT NEEDED TO OVERRIDE THIS METHOD
+  // CREATED TO SHOW ELEMENT IS CREATED BEFORE BUILD METHOD
+  // FLUTTER CREATES ELEMENTS FOR EVERY WIDGET
+//   @override
+//   StatefulElement createElement() {
+//     print('UIUpdatesDemo CREATEELEMENT called');
+//     return super.createElement();
+//   }
 
-  @override
-  State<UIUpdatesDemo> createState() {
-    return _UIUpdatesDemo();
-  }
-}
+//   @override
+//   State<UIUpdatesDemo> createState() {
+//     return _UIUpdatesDemo();
+//   }
+// }
 
-class _UIUpdatesDemo extends State<UIUpdatesDemo> {
-  var _isUnderstood = false;
+// class _UIUpdatesDemo extends State<UIUpdatesDemo> {
 
+// ONLY DemoButtons BUILD is called and not UIUpdatesDemo BUILD
+// on clicking on yes and no, which means flutter did not look into UIUpdateDemo Build method
+// and checked for the differences and UI update as the update was only needed on the Column
+// So we separated the column into a demo_buttons.dart.
+// So we should keep our StatefulWidhet as small as possible to improve performance.
+// We should only keep that part in StatefulWidget whose state is going to change.
   @override
   Widget build(BuildContext context) {
     print('UIUpdatesDemo BUILD called');
@@ -27,40 +36,19 @@ class _UIUpdatesDemo extends State<UIUpdatesDemo> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
+          children: const [
+            Text(
               'Every Flutter developer should have a basic understanding of Flutter\'s internals!',
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: 16),
+            Text(
               'Do you understand how Flutter updates UIs?',
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _isUnderstood = false;
-                    });
-                  },
-                  child: const Text('No'),
-                ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _isUnderstood = true;
-                    });
-                  },
-                  child: const Text('Yes'),
-                ),
-              ],
-            ),
-            if (_isUnderstood) const Text('Awesome!'),
+            SizedBox(height: 24),
+            DemoButtons(),
           ],
         ),
       ),
