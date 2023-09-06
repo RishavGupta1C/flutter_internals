@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 enum Priority { urgent, normal, low }
 
 class CheckableTodoItem extends StatefulWidget {
-  const CheckableTodoItem(this.text, this.priority, {Key? key});
+  const CheckableTodoItem(
+    this.text,
+    this.priority, {
+    Key? key,
+  }) : super(key: key);
 
   final String text;
   final Priority priority;

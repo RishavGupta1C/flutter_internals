@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_internals/keys/checkable_todo_item.dart';
 
-import 'package:flutter_internals/keys/todo_item.dart';
+// import 'package:flutter_internals/keys/todo_item.dart';
 
 class Todo {
   const Todo(this.text, this.priority);
@@ -10,7 +11,7 @@ class Todo {
 }
 
 class Keys extends StatefulWidget {
-  const Keys({Key? key});
+  const Keys({Key? key}) : super(key: key);
 
   @override
   State<Keys> createState() {
@@ -69,9 +70,10 @@ class _KeysState extends State<Keys> {
             children: [
               // for (final todo in _orderedTodos) TodoItem(todo.text, todo.priority),
               for (final todo in _orderedTodos)
-                TodoItem(
+                CheckableTodoItem /*TodoItem*/ (
                   todo.text,
                   todo.priority,
+                  key: ValueKey(todo.text),
                 ),
             ],
           ),
